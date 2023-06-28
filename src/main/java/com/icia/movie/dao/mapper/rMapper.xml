@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Review">
+
+	<!-- 관람평 목록 -->
+	<select id="rList" parameterType="int" resultType="review">
+		SELECT * FROM M_REVIEW WHERE MVNUM = #{mvNum} ORDER BY RNUM ASC
+	</select>
+
+	<!-- 관람평 등록 -->
+	<insert id="rRegister" parameterType="review">
+		INSERT INTO M_REVIEW
+		VALUES(M_REVIEW_SEQ.NEXTVAL,#{mvNum}, #{rWriter},
+		#{rContent}, SYSDATE)
+	</insert>
+	
+	<!-- 관람평 수정 -->
+	<update id="rModify" parameterType="review">
+		UPDATE M_REVIEW SET RCONTENT = #{rContent} , RDATE = SYSDATE WHERE RNUM = #{rNum} AND MVNUM = #{mvNum}
+	</update>
+
+	<!-- 관람평 삭제 -->
+	<delete id="rDelete" parameterType="review">
+	DELETE FROM M_REVIEW WHERE RNUM = #{rNum}
+	</delete>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Schedule">
+
+	<!-- sRegister : 상영정보등록 -->
+	<insert parameterType="schedule" id="sRegister">
+		INSERT INTO M_SCHEDULE
+		VALUES(M_SCHEDULE_SEQ.NEXTVAL,#{sDate}, #{sTime}, #{tNum}, #{mvNum})
+	</insert>
+
+	<!-- sList : 상영정보 목록 -->
+	<select id="sList" resultType="schedule">
+		SELECT a.SNUM, a.SDATE, a.STIME, a.TNUM, b.TTHTR, c.MVTITLE FROM M_SCHEDULE a, M_THEATER b, M_MOVIE c WHERE
+		a.TNUM = b.TNUM AND a.MVNUM = c.MVNUM ORDER BY SNUM DESC
+	</select>
+	
+	<!-- smList : 상영정보 목록 -->
+	<select id="smList" resultType="schedule">
+		SELECT a.SNUM, a.SDATE, a.STIME, b.TTHTR, c.MVTITLE FROM M_SCHEDULE a, M_THEATER b, M_MOVIE c WHERE
+		a.TNUM = b.TNUM AND a.MVNUM = c.MVNUM ORDER BY SNUM ASC
+	</select>
+
+	<!-- smvList : 해당영화 상영정보 목록 -->
+	<select id="smvList" resultType="schedule">
+		SELECT a.SNUM, a.SDATE, a.STIME,
+		b.TTHTR, c.MVTITLE FROM M_SCHEDULE a, M_THEATER b, M_MOVIE c WHERE
+		a.TNUM = b.TNUM AND a.MVNUM = c.MVNUM AND a.MVNUM=#{mvNum} 
+	</select>
+
+	<!-- sView : 상영정보 상세보기 -->
+	<select parameterType="int" id="sView" resultType="schedule">
+		SELECT a.SNUM, a.SDATE, a.STIME, b.TTHTR, c.MVTITLE, a.TNUM, a.MVNUM FROM M_SCHEDULE
+		a, M_THEATER b, M_MOVIE c WHERE a.TNUM = b.TNUM AND a.MVNUM = c.MVNUM
+		AND a.SNUM=#{sNum}
+	</select>
+
+	<!-- sModify : 상영정보 수정 -->
+	<update parameterType="schedule" id="sModify">
+		UPDATE M_SCHEDULE SET
+		SDATE=#{sDate}, STIME=#{sTime}, TNUM=#{tNum}, MVNUM=#{mvNum} WHERE
+		SNUM = #{sNum}
+	</update>
+
+	<!-- sDelete : 상영정보 삭제 -->
+	<delete parameterType="int" id="sDelete">
+		DELETE FROM M_SCHEDULE WHERE SNUM = #{sNum}
+	</delete>
+
+</mapper>

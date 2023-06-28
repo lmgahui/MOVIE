@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.icia.movie.dto.MEMBER" alias="member"/>
+		<typeAlias type="com.icia.movie.dto.MOVIE" alias="movie"/>
+		<typeAlias type="com.icia.movie.dto.PAGING" alias="paging"/>
+		<typeAlias type="com.icia.movie.dto.THEATER" alias="theater"/>
+		<typeAlias type="com.icia.movie.dto.SEARCH" alias="search"/>
+		<typeAlias type="com.icia.movie.dto.REVIEW" alias="review"/>
+		<typeAlias type="com.icia.movie.dto.SCHEDULE" alias="schedule"/>
+		<typeAlias type="com.icia.movie.dto.TICKET" alias="ticket"/>
+	</typeAliases>
+	
+</configuration>

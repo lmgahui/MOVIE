@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Movie">
+
+	<!-- 영화등록 -->
+	<insert id="mvRegister" parameterType="movie">
+		INSERT INTO M_MOVIE VALUES(M_MOVIE_SEQ.NEXTVAL, #{mvTitle}, #{mvCategory},
+		#{mvPlot}, #{mvDirector}, #{mvActor}, #{mvRelease}, #{mvRuntime},
+		#{mvRating}, #{mvImgName}, #{mvStill1}, #{mvStill2}, #{mvStill3}, #{mvStill4}, #{mvStill5})
+	</insert>
+
+	<!-- 영화 갯수 -->
+	<select id="mvCount" resultType="int">
+		SELECT COUNT(*) FROM M_MOVIE
+	</select>
+
+	<!-- 영화목록 페이징 -->
+	<select id="mvList" parameterType="paging" resultType="movie">
+		SELECT *
+		FROM M_MOVIELIST WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+	<!-- 영화 상세보기 -->
+	<select id="mvView" parameterType="int" resultType="movie">
+		SELECT * FROM
+		M_MOVIE WHERE MVNUM = #{mvNum}
+	</select>
+
+	<!-- 영화수정 -->
+	<update id="mvModify" parameterType="movie">
+		UPDATE M_MOVIE SET
+		MVTITLE=#{mvTitle}, MVCATEGORY=#{mvCategory}, MVPLOT=#{mvPlot},
+		MVDIRECTOR=#{mvDirector}, MVACTOR=#{mvActor}, MVRELEASE=#{mvRelease},
+		MVRUNTIME=#{mvRuntime}, MVRATING=#{mvRating}, MVIMGNAME=#{mvImgName},
+		MVSTILL1=#{mvStill1}, MVSTILL2=#{mvStill2}, MVSTILL3=#{mvStill3},
+		MVSTILL4=#{mvStill4}, MVSTILL5=#{mvStill5}
+		WHERE MVNUM= #{mvNum}
+	</update>
+	
+	<!-- 영화삭제 -->
+	<delete id="mvDelete" parameterType="int">
+		DELETE FROM M_MOVIE WHERE MVNUM = #{mvNum}
+	</delete>
+
+	<!-- 영화검색 -->
+	<select id="mvSearch" parameterType="search" resultType="movie">
+		SELECT *
+		FROM M_MOVIE WHERE (MVTITLE||MVACTOR||MVCATEGORY||MVDIRECTOR) LIKE '%${keyword}%'
+	</select>
+
+</mapper>

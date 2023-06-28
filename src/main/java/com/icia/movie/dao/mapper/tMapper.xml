@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Theater">
+
+	<!-- tRegister : 상영관등록 -->
+	<insert id="tRegister">
+		INSERT INTO M_THEATER VALUES(M_THEATER_SEQ.NEXTVAL, #{tThtr}, #{tAddr})
+	</insert>
+	
+	<!-- 상영관 갯수 --> 
+	<select id="tCount" resultType="int">
+		SELECT COUNT(*) FROM M_THEATER
+	</select>
+	
+	<!-- tList : 상영관목록  페이징 -->
+	<select id="tList" parameterType="paging" resultType="theater">
+		SELECT *
+		FROM M_THEATERLIST WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- tView : 상영관 상세보기 -->
+	<select id="tView" parameterType="int" resultType="theater">
+		SELECT * FROM
+		M_THEATER WHERE TNUM = #{tNum}
+	</select>
+	
+	<!-- tModify : 상영관 수정 -->
+	<update id="tModify" parameterType="theater">
+		UPDATE M_THEATER SET TTHTR=#{tThtr}, TADDR=#{tAddr} WHERE TNUM = #{tNum}
+	</update>
+	
+	<!-- tDelete : 상영관 삭제 -->
+	<delete id="tDelete" parameterType="int">
+	DELETE FROM M_THEATER WHERE TNUM = #{tNum}
+	</delete>
+	
+	<!-- tSearch : 상영관 검색 -->
+	<select id="tSearch" parameterType="search" resultType="theater">
+		SELECT * FROM M_THEATER WHERE ${category} LIKE '%${keyword}%'
+	</select>
+
+</mapper>
